@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<head>
+	<title>My WebSocket</title>
+	<meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+   
+</head>
+<body>
+	Welcome<br/>
+	userId:<input id="userId" type="text" value=""/>
+	message:<input id="text" type="text" />
+	<button onclick="conWebSocket()" id="connbtn" >ConnectWebSocket</button>
+	<button onclick="send()" id="sendbtn">Send</button>
+	<button onclick="closeWebSocket()" id="closebtn" disabled="disabled">Close</button>
+	<button onclick="mongodget()" id="mongodgetbtn" >mongodgetBTN</button>
+	<div id="message" >	</div>
+<script type="text/javascript" src="assets/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" charset="UTF-8">  
+	//mongodb数据获取
+	function mongodget() {
+		$.ajax({
+			url:"http://localhost:9091/mongodServer/listinfo?APPID=MongoLogs",
+			success:function(data){
+				alert(data);
+				setMessageInnerHTML(data);
+			}
+		});
+	}
+	
+	var websocket = null;  
+	var user = document.getElementById('userId');
+	var connbtn = document.getElementById('connbtn');
+	var sendbtn = document.getElementById('sendbtn');
+	var closebtn = document.getElementById('closebtn');
+	//获取websocket连接
+	function conWebSocket() {
+		var userValue = user.value;
+		if(userValue == ""){
+			setMessageInnerHTML("userValue is null! Please write it.");
+			return;
+		}
+		//判断当前浏览器是否支持WebSocket  
+		if ('WebSocket' in window) {
+			//实现化WebSocket对象，指定要连接的服务器地址与端口
+			websocket = new WebSocket("ws://localhost:8080/server/msg/"+userValue);
+		}else if('MozWebSocket' in window){
+			websocket = new MozWebSocket("ws://localhost:8080/server/msg/"+userValue);
+		}else{
+			alert("您的浏览器不支持WebSocket");
+			//alert('Not support websocket');
+			return ;
+		}		
+		//连接按钮不显示，断开按钮显示	
+		connbtn.disabled = true;
+		closebtn.disabled = false;
+		
+		//打开事件
+		websocket.onopen = function() {
+			//alert("Socket 已打开");
+			//socket.send("这是来自客户端的消息" + location.href + new Date());
+			setMessageInnerHTML("open!");
+		};
+		//获得消息事件
+		websocket.onmessage = function(event) {
+			//alert(event.data);
+			setMessageInnerHTML(event.data);
+		};
+		//关闭事件
+		websocket.onclose = function() {
+			//alert("Socket已关闭");
+			setMessageInnerHTML("close");
+			
+			connbtn.disabled=false;
+			closebtn.disabled=true;
+		};
+		//发生了错误事件
+		websocket.onerror = function() {
+			//alert("发生了错误");
+			setMessageInnerHTML("error");
+		}
+	}
+
+	/*  
+	//判断当前浏览器是否支持WebSocket  
+	if ('WebSocket' in window) {
+		//用户唯一标识
+		var userId = document.getElementById('userId').value;
+		websocket = new WebSocket("ws://localhost:8080/server/msg");  
+	} else {
+		alert('Not support websocket')
+	}
+	//连接发生错误的回调方法  
+	 websocket.onerror = function(){  
+	     setMessageInnerHTML("error");  
+	 };  
+	
+	 //连接成功建立的回调方法  
+	 websocket.onopen = function(event){  
+	     setMessageInnerHTML("open");  
+	 }  
+	 
+	 //接收到消息的回调方法  
+	 websocket.onmessage = function(event){  
+	     setMessageInnerHTML(event.data);  
+	 }  
+	
+	 //连接关闭的回调方法  
+	 websocket.onclose = function(){  
+	     setMessageInnerHTML("close");  
+	 }  
+	 */
+
+	//监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。  
+	window.onbeforeunload = function() {
+		//websocket.close();
+		//closeWebSocket();
+		if(websocket != null ){
+			closeWebSocket();
+		}		
+	}
+
+	//将消息显示在网页上  
+	function setMessageInnerHTML(innerHTML) {
+		document.getElementById('message').innerHTML += innerHTML + '<br/>';
+	}
+
+	//手动关闭连接  
+	function closeWebSocket() {
+		connbtn.disabled=false;
+		closebtn.disabled=true;
+		
+		websocket.close();
+		websocket = null;
+	}
+
+	//发送消息  
+	function send() {
+		//0 - 表示连接尚未建立。
+		//1 - 表示连接已建立，可以进行通信。
+		//2 - 表示连接正在进行关闭。
+		//3 - 表示连接已经关闭或者连接不能打开
+		if(websocket!=null){
+			var sta = websocket.readyState;
+			var message = document.getElementById('text').value;
+			//if(user.value == "user"){
+			//	message = "admin;"+message;
+			//}else if(user.value == "admin"){
+			//	message = "user;"+message;
+			//}else{
+			//	message = "total;"+message;
+			//}
+			
+			//alert("send:"+sta+"--"+message) ;
+			websocket.send(message);
+		}else{
+			setMessageInnerHTML("WebSocket close state.");  
+		}
+		
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+﻿<div class="panel panel-primary">
+	<!-- Default panel contents -->
+	<div class="panel-heading">
+		<div class="row">
+			<span class="col-xs-3" ng-click="$state.go('user.order')">我的订单</span><span
+				class="col-xs-6 text-center">我要下单</span><span
+				class="col-xs-3 text-right" ng-click="$state.go('user.home')">首页</span>
+		</div>
+	</div>
+	<div class="panel-body">
+		<ng-form class="row form-horizontal" novalidate role="form"
+			ng-show="firstPage" name="oneForm">
+		<div class="control-group">
+			<!-- Text input-->
+			<label class="control-label col-sm-2">姓名</label>
+			<div class="col-sm-10">
+				<input type="text" name="realname" placeholder="请输入姓名"
+					ng-model="order.REALNAME" class="form-control" required>
+				<p class="help-block">与身份证上姓名一致</p>
+			</div>
+		</div>
+		<div class="control-group"
+			ng-show="oneForm.realname.$dirty&&oneForm.realname.$invalid">
+			<div class="col-md-offset-2 col-md-10">
+				<label class="text-danger control-label"
+					ng-show="oneForm.realname.$error.required"> 姓名不能为空</label>
+			</div>
+		</div>
+		<div class="control-group">
+			<!-- Text input-->
+			<label class="control-label  col-sm-2">手机号码</label>
+			<div class="col-sm-10">
+				<input type="tel" name="tel" ng-model="order.TEL" maxlength="11"
+					minlength="11" placeholder="请输入手机号码" class="form-control" required>
+				<p class="help-block">请输入11位的手机号码</p>
+			</div>
+		</div>
+		<div class="control-group"
+			ng-show="oneForm.tel.$dirty&&oneForm.tel.$invalid">
+			<div class="col-md-offset-2 col-md-10">
+				<label class="text-danger control-label"
+					ng-show="oneForm.tel.$invalid||oneForm.tel.$error.minlength||oneForm.tel.$error.maxlength">
+					请输入11位手机号</label>
+			</div>
+		</div>
+		<div class="control-group">
+			<!-- Select Basic -->
+			<label class="control-label col-sm-2">省市</label>
+			<div class="col-sm-10">
+				<div class="radio-inline"
+					style="padding-left: 0px; padding-top: 0px; margin-bottom: 10px">
+					<select name="province" class="select"
+						ng-options="p.RGCODE as p.RGNAME for p in provinces"
+						ng-model="order.PROVINCE" required>
+						<option value="">--请选择--</option>
+					</select> <select name="city" class="select"
+						ng-options="p.RGCODE as p.RGNAME for p in citys"
+						ng-model="order.CITY" required>
+						<option value="">--请选择--</option>
+					</select> <select name="county" class="select"
+						ng-options="p.RGCODE as p.RGNAME for p in countys"
+						ng-model="order.COUNTY" required>
+						<option value="">--请选择--</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="control-group"
+			ng-show="oneForm.province.$dirty&&oneForm.province.$invalid">
+			<div class="col-md-offset-2 col-md-10">
+				<label class="text-danger control-label"
+					ng-show="oneForm.province.$error.required"> 省不能为空</label>
+			</div>
+		</div>
+		<div class="control-group"
+			ng-show="oneForm.city.$dirty&&oneForm.city.$invalid">
+			<div class="col-md-offset-2 col-md-10">
+				<label class="text-danger control-label"
+					ng-show="oneForm.city.$error.required"> 市不能为空</label>
+			</div>
+		</div>
+		<div class="control-group"
+			ng-show="oneForm.county.$dirty&&oneForm.county.$invalid">
+			<div class="col-md-offset-2 col-md-10">
+				<label class="text-danger control-label"
+					ng-show="oneForm.county.$error.required"> 县不能为空</label>
+			</div>
+		</div>
+		<div class="control-group">
+			<!-- Text input-->
+			<label class="control-label col-sm-2">详细地址</label>
+			<div class="col-sm-10">
+				<input type="text" placeholder="请输入你的详细地址" class="form-control"
+					name="address" ng-model="order.ADDRESS" required>
+				<p class="help-block">具体到门牌号(不包含省市县)</p>
+			</div>
+		</div>
+		<div class="control-group"
+			ng-show="oneForm.address.$dirty&&oneForm.address.$invalid">
+			<div class="col-md-offset-2 col-md-10">
+				<label class="text-danger control-label"
+					ng-show="oneForm.address.$error.required"> 地址不能为空</label>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label col-sm-2"></label>
+			<!-- Button -->
+			<div class="col-sm-10">
+				<button class="btn btn-primary" ng-disabled="oneForm.$invalid"
+					ng-click="oneNext()">
+					<span class="glyphicon glyphicon-triangle-bottom"></span> 下一步
+				</button>
+			</div>
+		</div>
+	</div>
+	</ng-form>
+	<ng-form ng-show="twoPage" name="twoFrom" class="row form-horizontal"
+		novalidate role="form">
+	<div class="control-group">
+		<!-- Select Basic -->
+		<label class="control-label col-sm-2">品名</label>
+		<div class="col-sm-10">
+			<div class="radio-inline"
+				style="padding-left: 0px; padding-top: 0px; margin-bottom: 10px">
+				<select name="parent" class="select" style="width: 45%"
+					ng-options="p.CATALOGID as p.CATALOGNAME for p in parentCatalogs"
+					ng-model="orderDetail.PARENTCATALOGID" required>
+					<option value="">--请选择--</option>
+				</select> <select name="catalogid" class="select" style="width: 45%"
+					ng-options="p.CATALOGID as p.CATALOGNAME for p in catalogs"
+					ng-model="orderDetail.CATALOGID" required>
+					<option value="">--请选择--</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<div class="control-group"
+		ng-show="twoFrom.catalogid.$dirty&&twoFrom.catalogid.$invalid">
+		<div class="col-md-offset-2 col-md-10">
+			<label class="text-danger control-label"
+				ng-show="twoFrom.catalogid.$error.required"> 品名不能为空</label>
+		</div>
+	</div>
+	<div class="control-group">
+		<!-- Select Basic -->
+		<label class="control-label col-sm-2">规格型号</label>
+		<div class="col-sm-10">
+			<div class="radio-inline"
+				style="padding-left: 0px; padding-top: 0px; margin-bottom: 10px">
+				<select name="itemspec" class="select" style="width: 45%"
+					ng-options="p.ITEMSPEC as p.ITEMSPEC for p in itemspecs"
+					ng-model="orderDetail.ITEMSPEC">
+					<option value="">--请选择--</option>
+				</select> <select name="itemmodel" class="select" style="width: 45%"
+					ng-options="p.ITEMMODEL as p.ITEMMODEL for p in itemmodels"
+					ng-model="orderDetail.ITEMMODEL">
+					<option value="">--请选择--</option>
+				</select>
+			</div>
+		</div>
+	</div>
+
+	<div class="control-group">
+		<!-- Text input-->
+		<label class="control-label col-sm-2">数量</label>
+		<div class="col-sm-10">
+			<input type="number" placeholder="请输入数量" class="form-control"
+				name="collatequantity" ng-model="orderDetail.COLLATEQUANTITY"
+				required>
+			<p class="help-block">请填写数字</p>
+		</div>
+	</div>
+	<div class="control-group"
+		ng-show="twoFrom.collatequantity.$dirty&&twoFrom.collatequantity.$invalid">
+		<div class="col-md-offset-2 col-md-10">
+			<label class="text-danger control-label"
+				ng-show="twoFrom.collatequantity.$error.required"> 数量不能为空</label>
+		</div>
+	</div>
+	<div class="control-group"
+		ng-show="twoFrom.goodsname.$dirty&&twoFrom.goodsname.$invalid">
+		<div class="col-md-offset-2 col-md-10">
+			<label class="text-danger control-label"
+				ng-show="twoFrom.goodsname.$error.required"> 内容补充不能为空</label>
+		</div>
+	</div>
+	<div class="control-group">
+		<!-- Text input-->
+		<label class="control-label col-sm-2">备注</label>
+		<div class="col-sm-10">
+			<input type="text" placeholder="请输入你的备注内容" class="form-control"
+				name="remark" ng-model="orderDetail.REMARK">
+			<p class="help-block">补充内容,可以不填</p>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label col-sm-2">订单内容</label>
+		<div class="col-sm-10">
+			<table class="table table-striped table-hover table-condensed">
+				<thead>
+					<tr>
+						<th>品名</th>
+						<th>数量</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="detail in orderDetails">
+						<td>{{detail.GOODSNAME}}</td>
+						<td>{{detail.COLLATEQUANTITY}}</td>
+						<td><button ng-click="del(detail.LINENO)"
+								class="btn btn-danger btn-xs">删除</button> |
+							<button ng-click="edit(detail.LINENO)" class="btn btn-success btn-xs">编辑</button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label col-sm-2"></label>
+		<!-- Button -->
+		<div class="col-sm-10">
+			<button class="btn btn-primary" ng-disabled="twoFrom.$invalid"
+				ng-click="addnew()">
+				<span class="glyphicon glyphicon-plus"> 增加一项</span>
+			</button>
+
+			<button class="btn btn-success"
+				ng-disabled="orderDetails.length==0&&twoFrom.$invalid"
+				ng-click="save()">
+				<span class="glyphicon glyphicon-ok"> 立即发布</span>
+			</button>
+
+			<button class="btn btn-default" ng-click="oneUp()">
+				<span class="glyphicon glyphicon-triangle-top"> 上一步</span>
+			</button>
+		</div>
+	</div>
+	</ng-form>
+</div>

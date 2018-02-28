@@ -1,0 +1,70 @@
+﻿<div class="panel panel-primary">
+	<!-- Default panel contents -->
+	<div class="panel-heading">用户登录</div>
+	<div class="panel-body">
+		<ng-form class="form-horizontal" novalidate role="form"
+			name="loginForm">
+		<div class="form-group" style="margin-top: 15px">
+			<label class="col-md-2 control-label">用户名:</label>
+			<div class="col-md-10">
+				<input type="text" name="userid" class="form-control" required
+					  ng-model="userLoginInfo.USERID" placeholder="请输入用户名" />
+			</div>
+		</div>
+		<div class="form-group"
+			ng-show="loginForm.userid.$dirty&&loginForm.userid.$invalid">
+			<div class="col-md-offset-2 col-md-10">
+				<label class="text-danger control-label"
+					ng-show="loginForm.userid.$error.required"> 用户名不能为空</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-2 control-label">密码:</label>
+			<div class="col-md-10">
+				<input type="password" name="password" class="form-control" required
+					minlength="6" ng-model="userLoginInfo.PASSWORD" placeholder="请输入密码" />
+			</div>
+		</div>
+		<div class="form-group"
+			ng-show="loginForm.password.$dirty&&loginForm.password.$invalid">
+			<div class="col-md-offset-2 col-md-10">
+				<label class="text-danger control-label"
+					ng-show="loginForm.password.$error.required"> 密码不能为空</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<div class="checkbox">
+					<label> <input type="checkbox"
+						ng-model="userLoginInfo.autoLogin" />自动登录
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="form-group" ng-show="userLoginInfo.error">
+			<div class="col-md-offset-2 col-md-10">
+				<label class="text-danger control-label">{{userLoginInfo.msg}}</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<button class="btn btn-primary" ng-click="login()"
+					ng-disabled="loginForm.$invalid">
+					<span class="glyphicon glyphicon-ok"></span> 登录
+				</button>
+				<button class="btn btn-default" ng-click="reset()">
+					<span class="glyphicon glyphicon-repeat"> 重置 
+				</button>
+			</div>
+		</div>
+		<div ng-show="false">
+			<span>其他方式登录</span> <a href="javascript:void(0)"
+				data-login-sns="/passport/user/tplogin?tp=weibo"><i></i></a> <a
+				href="javascript:void(0)"
+				data-login-sns="/passport/user/tplogin?tp=qq" class="pop-sns-qq r"><i></i></a>
+			<a href="javascript:void(0)"
+				data-login-sns="/passport/user/tplogin?tp=weixin"><i></i></a>
+		</div>
+		</ng-form>
+	</div>
+</div>

@@ -1,0 +1,66 @@
+﻿<div class="container-fluid" ng-controller="wolfCtrl">
+	<ul class="nav nav-tabs">
+		<li role="presentation" class="active" ng-click="getVideoList()"><a
+			href="#dh" data-toggle="tab">动画</a></li>
+		<li role="presentation" ng-click="getAudioList()"><a href="#eg"
+			data-toggle="tab">儿歌</a></li>
+	</ul>
+	<div class="tab-content row">
+		<div class="tab-pane active" id="dh">
+			<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2"
+				ng-repeat="item in videoList">
+				<div class="thumbnail" ng-click="toPlayVideo(item)"
+					data-toggle="modal" data-target="#playModal"
+					style="cursor: pointer;">
+					<img ng-src="{{item.PICPATH}}">
+					<div class="caption" style="padding: 5px 0px 20px 0px">
+						<span style="float: left">{{item.TITLE}}</span> <span
+							style="float: right">播放:{{item.PLAYCOUNT}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane" id="eg">
+			<!-- <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2"
+					ng-repeat="item in audioList">
+					<div class="thumbnail">
+						<img ng-src="{{item.PICPATH}}" ng-click="toPlayAudio(item)"
+							data-toggle="modal" data-target="#playModal"
+							style="cursor: pointer;"
+							style="width: 80%; height: 80%; cursor: pointer;">
+						<div class="caption" style="padding: 5px 0px 20px 0px">
+							<span style="float: left" ng-bind="item.TITLE"></span> <span
+								style="float: right">播放:{{item.PLAYCOUNT}}</span>
+						</div>
+					</div>
+				</div> -->
+
+			<ul class="media-list">
+				<li class="media col-sx-12 col-md-12" ng-repeat="item in audioList">
+					<div class="media-left media-top">
+						<img class="media-object" ng-click="toPlayAudio(item)"
+							data-toggle="modal" data-target="#playModal"
+							ng-src="{{item.THUMBNAILPATH}}" alt="..."
+							style="cursor: pointer;">
+					</div>
+					<div class="media-body">
+						<h4 class="media-heading" ng-bind="item.TITLE"></h4>
+						<p>{{item.CONTENT}}</p>
+						<p>{{item.EXTENDIVEREAD}}</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="modal fade" id="playModal">
+			<div class="modal-dialog modal-lg">
+				<videogular vg-theme="videoConfig.theme"> <vg-media
+					vg-src="videoConfig.sources"> </vg-media> <vg-controls>
+				<vg-play-pause-button></vg-play-pause-button> <vg-time-display>{{
+				currentTime | date:'mm:ss' }}</vg-time-display> <vg-scrub-bar> <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+				</vg-scrub-bar> <vg-time-display>{{ timeLeft | date:'mm:ss' }}</vg-time-display> <vg-volume>
+				<vg-mute-button></vg-mute-button> <vg-volume-bar></vg-volume-bar> </vg-volume> <vg-fullscreen-button></vg-fullscreen-button>
+				</vg-controls> <vg-overlay-play></vg-overlay-play> <vg-poster
+					vg-url='videoConfig.plugins.poster'></vg-poster> </videogular>
+			</div>
+		</div>
+	</div>

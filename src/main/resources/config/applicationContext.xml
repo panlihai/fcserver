@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd"
+	default-autowire="byName">
+
+	<!-- 自动扫描 -->
+	<context:component-scan base-package="cn.pcorp" />
+	<mvc:annotation-driven />
+	<!-- 启动spring注解,当自动扫描启动后,该配置可以去掉 -->
+	<context:annotation-config />
+	<!-- 配置数据源属性文件 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:config/database.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 配置数据源 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${jdbc.c3p0.driverClassName}" />
+		<property name="jdbcUrl" value="${dbA.jdbc.c3p0.url}" />
+		<property name="user" value="${dbA.jdbc.c3p0.username}" />
+		<property name="password" value="${dbA.jdbc.c3p0.password}" />
+		<property name="initialPoolSize" value="${dbA.jdbc.c3p0.initialSize}" />
+		<property name="minPoolSize" value="${dbA.jdbc.c3p0.initialSize}" />
+		<property name="maxPoolSize" value="${dbA.jdbc.c3p0.maxActive}" />
+		<!--在当前连接数耗尽的时候，一次获取的新的连接数 -->
+		<property name="acquireIncrement" value="5" />
+		<property name="maxIdleTime" value="${dbA.jdbc.c3p0.maxIdle}" />
+		<!--JDBC的标准参数，用以控制数据源内加载的PreparedStatements数量。但由于预缓存的statements 属于单个connection而不是整个连接池。所以设置这个参数需要考虑到多方面的因素。 
+			如果maxStatements与maxStatementsPerConnection均为0，则缓存被关闭。Default: 0 -->
+		<property name="maxStatements" value="0" />
+		<!--连接池用完时客户调用getConnection()后等待获取连接的时间，单位：毫秒。超时后会抛出 -->
+		<!--SQLEXCEPTION，如果设置0，则无限等待。Default:0 -->
+		<property name="checkoutTimeout" value="0" />
+		<property name="autoCommitOnClose" value="false"></property>
+	</bean>
+
+	<!-- 配置SqlMapClient对象 -->
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:config/sqlMapConfig.xml" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!--根据sqlMapClien创建一个SqlMapClient模版类 -->
+	<bean id="sqlMapClientTemplate" class="org.springframework.orm.ibatis.SqlMapClientTemplate">
+		<property name="sqlMapClient" ref="sqlMapClient" />
+	</bean>
+	<!-- 事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- 启动spring事务注解，事务注解尽在此 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+
+	<!-- 配置事务特性 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="edit*" propagation="REQUIRED" />
+			<tx:method name="excute*" propagation="REQUIRED" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="batch*" propagation="REQUIRED" />
+			<tx:method name="create*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="remove*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="push*" propagation="REQUIRED" />
+			<tx:method name="login*" propagation="REQUIRED" />
+			<tx:method name="logout*" propagation="REQUIRED" />
+			<tx:method name="send*" propagation="REQUIRED" />
+			<tx:method name="select*" propagation="REQUIRED" />
+			<tx:method name="*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- 配置事务代理拦截器 -->
+	<bean id="baseTransactionProxy" abstract="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="baseDao" class="cn.pcorp.dao.BaseDao">
+		<property name="sqlMapClient" ref="sqlMapClient" />
+	</bean>
+	<bean id="baseService" class="cn.pcorp.service.BaseService">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+	<!-- 添加了事务的管理类 -->
+	<bean id="baseManager" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="cn.pcorp.service.BaseService" />
+		</property>
+	</bean>
+
+</beans>

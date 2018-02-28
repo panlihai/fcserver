@@ -1,0 +1,54 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans   
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
+        http://www.springframework.org/schema/mvc  
+        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd  
+        http://www.springframework.org/schema/context   
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<mvc:annotation-driven />
+
+	<!-- 自动扫描,完成bean创建和依赖注入 -->
+	<context:component-scan base-package="cn.pcorp" />
+
+	<!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+	<mvc:resources location="/echo/" mapping="/echo/**" />
+	<mvc:resources location="/snake/" mapping="/snake/**" />
+	<mvc:resources location="/sockjs/" mapping="/sockjs/**" />
+	<mvc:resources location="/assets/" mapping="/assets/**" />	
+	<mvc:resources location="/upload/" mapping="/upload/**" />
+	<mvc:resources location="/images/" mapping="/images/**" />
+	<mvc:resources location="/wap/" mapping="/wap/**" />		
+	<mvc:resources location="/" mapping="/*.html" />
+	<mvc:resources location="/msg/" mapping="/msg/**" />
+	<bean id="defaultJsonView"
+		class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+	<!-- 文件上传 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+	<!-- 异常解析器 -->
+	<bean id="simpleMappingExceptionResolver"
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop
+					key="org.springframework.web.multipart.MaxUploadSizeExceededException">common/fileerror
+				</prop>
+			</props>
+		</property>
+	</bean>
+	<mvc:interceptors>
+        <!-- 多个拦截器,顺序执行 -->
+        <!-- 用户权限验证 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="cn.pcorp.interceptor.UserAuthInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    
+</beans>

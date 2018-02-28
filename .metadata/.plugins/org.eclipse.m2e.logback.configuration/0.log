@@ -1,0 +1,95 @@
+2015-12-23 15:13:30,498 [main] INFO  c.g.e.m.h.c.ui.Html5AppCoreUIPlugin - Pluging started
+2015-12-23 15:13:34,955 [Worker-3] INFO  o.e.m.c.i.i.nexus.NexusIndexManager - Updating index for repository: central|http://repo.maven.apache.org/maven2
+2015-12-23 15:13:35,211 [Worker-3] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-12-23 15:13:46,211 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Installing C:\Users\Administrator\AppData\Local\MyEclipse Professional 2014\configuration\org.eclipse.osgi\bundles\124\1\.cp\data\2.5.2\dataaggregationapi.jar to C:\Users\Administrator\.m2\repository\myeclipse-reports\dataaggregationapi\2.5.2\dataaggregationapi-2.5.2.jar
+2015-12-23 15:13:46,574 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Installing C:\Users\ADMINI~1\AppData\Local\Temp\mvninstall742295165097325291.pom to C:\Users\Administrator\.m2\repository\myeclipse-reports\dataaggregationapi\2.5.2\dataaggregationapi-2.5.2.pom
+2015-12-23 15:13:46,614 [Worker-4] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-12-23 15:13:47,575 [Worker-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/myeclipse-reports/modelodaapi/2.5.2/modelodaapi-2.5.2.jar
+2015-12-23 15:13:47,591 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Installing C:\Users\Administrator\AppData\Local\MyEclipse Professional 2014\configuration\org.eclipse.osgi\bundles\124\1\.cp\data\2.5.2\modelodaapi.jar to C:\Users\Administrator\.m2\repository\myeclipse-reports\modelodaapi\2.5.2\modelodaapi-2.5.2.jar
+2015-12-23 15:13:47,601 [Worker-3] ERROR o.e.m.c.i.i.nexus.NexusIndexManager - Unable to update index for central|http://repo.maven.apache.org/maven2
+java.io.IOException: null to http://repo.maven.apache.org/maven2/.index/nexus-maven-repository-index.properties
+	at org.eclipse.m2e.core.internal.index.nexus.AsyncFetcher$PipedErrorInputStream.checkError(AsyncFetcher.java:251) ~[org.eclipse.m2e.core_1.4.0.me201310171809.jar:na]
+	at org.eclipse.m2e.core.internal.index.nexus.AsyncFetcher$PipedErrorInputStream.read(AsyncFetcher.java:257) ~[org.eclipse.m2e.core_1.4.0.me201310171809.jar:na]
+	at java.io.PipedInputStream.read(PipedInputStream.java:378) ~[na:1.7.0_45]
+	at java.io.InputStream.read(InputStream.java:101) ~[na:1.7.0_45]
+	at java.util.Properties$LineReader.readLine(Properties.java:434) ~[na:1.7.0_45]
+	at java.util.Properties.load0(Properties.java:353) ~[na:1.7.0_45]
+	at java.util.Properties.load(Properties.java:341) ~[na:1.7.0_45]
+	at org.apache.maven.index.updater.DefaultIndexUpdater.downloadIndexProperties(DefaultIndexUpdater.java:457) ~[indexer-core-3.1.0.jar:3.1.0]
+	at org.apache.maven.index.updater.DefaultIndexUpdater.access$100(DefaultIndexUpdater.java:75) ~[indexer-core-3.1.0.jar:3.1.0]
+	at org.apache.maven.index.updater.DefaultIndexUpdater$IndexAdaptor.setProperties(DefaultIndexUpdater.java:607) ~[indexer-core-3.1.0.jar:3.1.0]
+	at org.apache.maven.index.updater.DefaultIndexUpdater.fetchAndUpdateIndex(DefaultIndexUpdater.java:788) ~[indexer-core-3.1.0.jar:3.1.0]
+	at org.apache.maven.index.updater.DefaultIndexUpdater.fetchAndUpdateIndex(DefaultIndexUpdater.java:135) ~[indexer-core-3.1.0.jar:3.1.0]
+	at org.eclipse.m2e.core.internal.index.nexus.NexusIndexManager.updateRemoteIndex(NexusIndexManager.java:1237) [org.eclipse.m2e.core_1.4.0.me201310171809.jar:na]
+	at org.eclipse.m2e.core.internal.index.nexus.NexusIndexManager.updateIndex(NexusIndexManager.java:1192) [org.eclipse.m2e.core_1.4.0.me201310171809.jar:na]
+	at org.eclipse.m2e.core.internal.index.nexus.NexusIndexManager$1.run(NexusIndexManager.java:707) [org.eclipse.m2e.core_1.4.0.me201310171809.jar:na]
+	at org.eclipse.m2e.core.internal.index.nexus.IndexUpdaterJob.run(IndexUpdaterJob.java:72) [org.eclipse.m2e.core_1.4.0.me201310171809.jar:na]
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53) [org.eclipse.core.jobs_3.5.300.v20130429-1813.jar:na]
+Caused by: java.net.ConnectException: null to http://repo.maven.apache.org/maven2/.index/nexus-maven-repository-index.properties
+	at com.ning.http.client.providers.netty.NettyConnectListener.operationComplete(NettyConnectListener.java:95) ~[async-http-client-1.6.5.jar:na]
+	at org.jboss.netty.channel.DefaultChannelFuture.notifyListener(DefaultChannelFuture.java:381) ~[na:na]
+	at org.jboss.netty.channel.DefaultChannelFuture.addListener(DefaultChannelFuture.java:148) ~[na:na]
+	at com.ning.http.client.providers.netty.NettyAsyncHttpProvider.doConnect(NettyAsyncHttpProvider.java:945) ~[async-http-client-1.6.5.jar:na]
+	at com.ning.http.client.providers.netty.NettyAsyncHttpProvider.execute(NettyAsyncHttpProvider.java:776) ~[async-http-client-1.6.5.jar:na]
+	at com.ning.http.client.AsyncHttpClient.executeRequest(AsyncHttpClient.java:484) ~[async-http-client-1.6.5.jar:na]
+	at com.ning.http.client.SimpleAsyncHttpClient.execute(SimpleAsyncHttpClient.java:285) ~[async-http-client-1.6.5.jar:na]
+	at com.ning.http.client.SimpleAsyncHttpClient.get(SimpleAsyncHttpClient.java:202) ~[async-http-client-1.6.5.jar:na]
+	at org.eclipse.m2e.core.internal.index.nexus.AsyncFetcher.retrieve(AsyncFetcher.java:203) ~[org.eclipse.m2e.core_1.4.0.me201310171809.jar:na]
+	at org.apache.maven.index.updater.DefaultIndexUpdater.downloadIndexProperties(DefaultIndexUpdater.java:452) ~[indexer-core-3.1.0.jar:3.1.0]
+	... 9 common frames omitted
+Caused by: java.nio.channels.UnresolvedAddressException: null
+	at sun.nio.ch.Net.checkAddress(Net.java:127) ~[na:1.7.0_45]
+	at sun.nio.ch.SocketChannelImpl.connect(SocketChannelImpl.java:640) ~[na:1.7.0_45]
+	at org.jboss.netty.channel.socket.nio.NioClientSocketPipelineSink.connect(NioClientSocketPipelineSink.java:140) ~[na:na]
+	at org.jboss.netty.channel.socket.nio.NioClientSocketPipelineSink.eventSunk(NioClientSocketPipelineSink.java:103) ~[na:na]
+	at org.jboss.netty.handler.codec.oneone.OneToOneEncoder.handleDownstream(OneToOneEncoder.java:60) ~[na:na]
+	at org.jboss.netty.handler.codec.http.HttpClientCodec.handleDownstream(HttpClientCodec.java:82) ~[na:na]
+	at org.jboss.netty.handler.stream.ChunkedWriteHandler.handleDownstream(ChunkedWriteHandler.java:115) ~[na:na]
+	at org.jboss.netty.channel.Channels.connect(Channels.java:541) ~[na:na]
+	at org.jboss.netty.channel.AbstractChannel.connect(AbstractChannel.java:210) ~[na:na]
+	at org.jboss.netty.bootstrap.ClientBootstrap.connect(ClientBootstrap.java:227) ~[na:na]
+	at org.jboss.netty.bootstrap.ClientBootstrap.connect(ClientBootstrap.java:188) ~[na:na]
+	at com.ning.http.client.providers.netty.NettyAsyncHttpProvider.doConnect(NettyAsyncHttpProvider.java:902) ~[async-http-client-1.6.5.jar:na]
+	... 15 common frames omitted
+2015-12-23 15:13:47,662 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Installing C:\Users\ADMINI~1\AppData\Local\Temp\mvninstall6884990006155547589.pom to C:\Users\Administrator\.m2\repository\myeclipse-reports\modelodaapi\2.5.2\modelodaapi-2.5.2.pom
+2015-12-23 15:13:47,667 [Worker-4] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-12-23 15:13:47,668 [Worker-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/myeclipse-reports/odadesignapi/2.5.2/odadesignapi-2.5.2.jar
+2015-12-23 15:13:47,675 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Installing C:\Users\Administrator\AppData\Local\MyEclipse Professional 2014\configuration\org.eclipse.osgi\bundles\124\1\.cp\data\2.5.2\odadesignapi.jar to C:\Users\Administrator\.m2\repository\myeclipse-reports\odadesignapi\2.5.2\odadesignapi-2.5.2.jar
+2015-12-23 15:13:47,772 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Installing C:\Users\ADMINI~1\AppData\Local\Temp\mvninstall7968153454842923303.pom to C:\Users\Administrator\.m2\repository\myeclipse-reports\odadesignapi\2.5.2\odadesignapi-2.5.2.pom
+2015-12-23 15:13:47,777 [Worker-4] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-12-23 15:13:47,778 [Worker-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/myeclipse-reports/dataextraction/2.5.2/dataextraction-2.5.2.jar
+2015-12-23 15:13:47,787 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Installing C:\Users\Administrator\AppData\Local\MyEclipse Professional 2014\configuration\org.eclipse.osgi\bundles\124\1\.cp\data\2.5.2\dataextraction.jar to C:\Users\Administrator\.m2\repository\myeclipse-reports\dataextraction\2.5.2\dataextraction-2.5.2.jar
+2015-12-23 15:13:47,885 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Installing C:\Users\ADMINI~1\AppData\Local\Temp\mvninstall3270636716073067538.pom to C:\Users\Administrator\.m2\repository\myeclipse-reports\dataextraction\2.5.2\dataextraction-2.5.2.pom
+2015-12-23 15:13:47,890 [Worker-4] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-12-23 15:13:47,899 [Worker-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/myeclipse-reports/emitterconfig/2.5.2/emitterconfig-2.5.2.jar
+2015-12-23 15:13:47,906 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Installing C:\Users\Administrator\AppData\Local\MyEclipse Professional 2014\configuration\org.eclipse.osgi\bundles\124\1\.cp\data\2.5.2\emitterconfig.jar to C:\Users\Administrator\.m2\repository\myeclipse-reports\emitterconfig\2.5.2\emitterconfig-2.5.2.jar
+2015-12-23 15:13:48,020 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Installing C:\Users\ADMINI~1\AppData\Local\Temp\mvninstall8434902989217961592.pom to C:\Users\Administrator\.m2\repository\myeclipse-reports\emitterconfig\2.5.2\emitterconfig-2.5.2.pom
+2015-12-23 15:13:48,025 [Worker-4] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-12-23 15:13:48,027 [Worker-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/myeclipse/org.eclipse.emf.common/2.5.0/org.eclipse.emf.common-2.5.0.jar
+2015-12-23 15:13:48,035 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Installing C:\Users\Administrator\AppData\Local\MyEclipse Professional 2014\configuration\org.eclipse.osgi\bundles\124\1\.cp\data\2.5\org.eclipse.emf.common_2.5.0.v200906151043.jar to C:\Users\Administrator\.m2\repository\myeclipse\org.eclipse.emf.common\2.5.0\org.eclipse.emf.common-2.5.0.jar
+2015-12-23 15:13:48,394 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Installing C:\Users\ADMINI~1\AppData\Local\Temp\mvninstall3072953729473568853.pom to C:\Users\Administrator\.m2\repository\myeclipse\org.eclipse.emf.common\2.5.0\org.eclipse.emf.common-2.5.0.pom
+2015-12-23 15:13:48,399 [Worker-4] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-12-23 15:13:48,400 [Worker-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/myeclipse/org.eclipse.emf.ecore/2.5.0/org.eclipse.emf.ecore-2.5.0.jar
+2015-12-23 15:13:48,407 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Installing C:\Users\Administrator\AppData\Local\MyEclipse Professional 2014\configuration\org.eclipse.osgi\bundles\124\1\.cp\data\2.5\org.eclipse.emf.ecore_2.5.0.v200906151043.jar to C:\Users\Administrator\.m2\repository\myeclipse\org.eclipse.emf.ecore\2.5.0\org.eclipse.emf.ecore-2.5.0.jar
+2015-12-23 15:13:48,576 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Installing C:\Users\ADMINI~1\AppData\Local\Temp\mvninstall3565487616355538490.pom to C:\Users\Administrator\.m2\repository\myeclipse\org.eclipse.emf.ecore\2.5.0\org.eclipse.emf.ecore-2.5.0.pom
+2015-12-23 15:13:48,591 [Worker-4] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-12-23 15:13:48,597 [Worker-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/myeclipse/org.eclipse.emf.ecore.xmi/2.5.0/org.eclipse.emf.ecore.xmi-2.5.0.jar
+2015-12-23 15:13:48,606 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Installing C:\Users\Administrator\AppData\Local\MyEclipse Professional 2014\configuration\org.eclipse.osgi\bundles\124\1\.cp\data\2.5\org.eclipse.emf.ecore.xmi_2.5.0.v200906151043.jar to C:\Users\Administrator\.m2\repository\myeclipse\org.eclipse.emf.ecore.xmi\2.5.0\org.eclipse.emf.ecore.xmi-2.5.0.jar
+2015-12-23 15:13:48,674 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Installing C:\Users\ADMINI~1\AppData\Local\Temp\mvninstall1487872254707211067.pom to C:\Users\Administrator\.m2\repository\myeclipse\org.eclipse.emf.ecore.xmi\2.5.0\org.eclipse.emf.ecore.xmi-2.5.0.pom
+2015-12-23 15:13:48,679 [Worker-4] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-12-23 15:13:48,681 [Worker-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-multipart/1.0.3.1/jersey-multipart-1.0.3.1.jar
+2015-12-23 15:13:48,688 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Installing C:\Users\Administrator\AppData\Local\MyEclipse Professional 2014\plugins\com.genuitec.eclipse.ws_11.5.0.me201311281640\lib\jersey\1.0\jersey-multipart-1.0.3.1.jar to C:\Users\Administrator\.m2\repository\com\sun\jersey\jersey-multipart\1.0.3.1\jersey-multipart-1.0.3.1.jar
+2015-12-23 15:13:48,822 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Installing C:\Users\ADMINI~1\AppData\Local\Temp\mvninstall5113263993224611814.pom to C:\Users\Administrator\.m2\repository\com\sun\jersey\jersey-multipart\1.0.3.1\jersey-multipart-1.0.3.1.pom
+2015-12-23 15:13:48,829 [Worker-4] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-12-23 15:13:48,831 [Worker-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/jersey/jersey-multipart/1.4/jersey-multipart-1.4.jar
+2015-12-23 15:13:48,838 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Installing C:\Users\Administrator\AppData\Local\MyEclipse Professional 2014\plugins\com.genuitec.eclipse.ws_11.5.0.me201311281640\lib\jersey\1.4\jersey-multipart-1.4.jar to C:\Users\Administrator\.m2\repository\com\sun\jersey\jersey-multipart\1.4\jersey-multipart-1.4.jar
+2015-12-23 15:13:48,899 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Installing C:\Users\ADMINI~1\AppData\Local\Temp\mvninstall6018618170928249044.pom to C:\Users\Administrator\.m2\repository\com\sun\jersey\jersey-multipart\1.4\jersey-multipart-1.4.pom
+2015-12-23 15:13:48,908 [Worker-4] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-12-23 15:13:48,912 [Worker-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/webservices-extra/1.1/webservices-extra-1.1.jar
+2015-12-23 15:13:48,924 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Installing C:\Users\Administrator\AppData\Local\MyEclipse Professional 2014\plugins\com.genuitec.eclipse.ws.xfire_11.5.0.me201311050147\lib\webservices-extra.jar to C:\Users\Administrator\.m2\repository\com\sun\webservices-extra\1.1\webservices-extra-1.1.jar
+2015-12-23 15:13:49,005 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Installing C:\Users\ADMINI~1\AppData\Local\Temp\mvninstall5523912746836834057.pom to C:\Users\Administrator\.m2\repository\com\sun\webservices-extra\1.1\webservices-extra-1.1.pom
+2015-12-23 15:13:49,011 [Worker-4] INFO  c.n.h.c.p.n.NettyAsyncHttpProvider - Number of application's worked threads is 8
+2015-12-23 15:13:49,014 [Worker-4] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded http://repo.maven.apache.org/maven2/com/sun/webservices-rt/1.1/webservices-rt-1.1.jar
+2015-12-23 15:13:49,020 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Installing C:\Users\Administrator\AppData\Local\MyEclipse Professional 2014\plugins\com.genuitec.eclipse.ws.xfire_11.5.0.me201311050147\lib\webservices-rt.jar to C:\Users\Administrator\.m2\repository\com\sun\webservices-rt\1.1\webservices-rt-1.1.jar
+2015-12-23 15:13:49,307 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - Installing C:\Users\ADMINI~1\AppData\Local\Temp\mvninstall1773541434923823735.pom to C:\Users\Administrator\.m2\repository\com\sun\webservices-rt\1.1\webservices-rt-1.1.pom
+2015-12-23 15:13:59,124 [Worker-4] INFO  o.e.m.c.i.i.nexus.NexusIndexManager - Updated local repository index

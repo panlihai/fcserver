@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"   
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+
+<sqlMap namespace="general">
+	<typeAlias alias="sqladapter" type="cn.pcorp.util.sql.SQLAdapter" />
+	<typeAlias alias="hashMap" type="java.util.HashMap" />
+	<select id="select" parameterClass="sqladapter" resultClass="hashMap"
+		remapResults="true">
+    	<![CDATA[
+           $sql$
+        ]]>
+	</select>
+	<!-- 查询返回结果集数量 -->
+	<select id="selectCount" resultClass="long" remapResults="true"
+		parameterClass="sqladapter">
+		<![CDATA[
+           $sql$
+        ]]>
+	</select>
+	<insert id="insert" parameterClass="sqladapter">
+	    <![CDATA[
+	           $sql$
+	        ]]>
+	</insert>
+	<update id="update" parameterClass="sqladapter">
+	    <![CDATA[
+	           $sql$
+	        ]]>
+	</update>
+	<delete id="delete" parameterClass="sqladapter">
+	    <![CDATA[
+	           $sql$
+	        ]]>
+	</delete>
+</sqlMap>

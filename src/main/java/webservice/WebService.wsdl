@@ -1,0 +1,748 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="YuanYT.RemotingCall" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="YuanYT.RemotingCall" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="YuanYT.RemotingCall">
+      <s:element name="getUserData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="byteHTLoader" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getUserDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getUserDataResult">
+              <s:complexType>
+                <s:sequence>                  
+                <s:any minOccurs="2" maxOccurs="2"/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getCompanyData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="byteHTLoader" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getCompanyDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getCompanyDataResult">
+              <s:complexType>
+                <s:sequence>                  
+                <s:any minOccurs="2" maxOccurs="2"/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getUpdateMSG">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="byteHTLoader" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="sUpdateTime" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sMSGType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getUpdateMSGResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getUpdateMSGResult">
+              <s:complexType>
+                <s:sequence>                  
+                <s:any minOccurs="2" maxOccurs="2"/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="writeMSG">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="byteHTLoader" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="writeMSGResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="writeMSGResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getDBStructure">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="byteHTLoader" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="sCompanyCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sAppCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sYear" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sVersion" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getDBStructureResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getDBStructureResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getDemoDBStructure">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="byteHTLoader" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="sVersion" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getDemoDBStructureResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getDemoDBStructureResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="execSQL">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="byteHTLoader" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="byteHTCorp" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="sSQL" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="execSQLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="execSQLResult">
+              <s:complexType>
+                <s:sequence>                  
+                <s:any minOccurs="2" maxOccurs="2"/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getWebData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sAssembly" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="byteHTCorp" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="byteHTFixedCondition" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="sServerCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getWebDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getWebDataResult">
+              <s:complexType>
+                <s:sequence>                  
+                <s:any minOccurs="2" maxOccurs="2"/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getEAIWebData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sAssembly" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="byteHTLoader" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="byteHTCorp" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="byteHTFixedCondition" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getEAIWebDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getEAIWebDataResult">
+              <s:complexType>
+                <s:sequence>                  
+                <s:any minOccurs="2" maxOccurs="2"/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getEAIWebDataNBDW">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sAssembly" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="byteHTLoader" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="byteHTCorp" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="byteHTFixedCondition" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getEAIWebDataNBDWResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getEAIWebDataNBDWResult">
+              <s:complexType>
+                <s:sequence>                  
+                <s:any minOccurs="2" maxOccurs="2"/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getEAIWebDataNBDWSys">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sAssembly" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="byteHTLoader" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="byteHTCorp" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="byteHTFixedCondition" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getEAIWebDataNBDWSysResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getEAIWebDataNBDWSysResult">
+              <s:complexType>
+                <s:sequence>                  
+                <s:any minOccurs="2" maxOccurs="2"/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getEAIWebDataQMYS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sDataType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="byteHTLoader" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="byteHTCorp" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="byteHTFixedCondition" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getEAIWebDataQMYSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getEAIWebDataQMYSResult">
+              <s:complexType>
+                <s:sequence>                  
+                <s:any minOccurs="2" maxOccurs="2"/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getEAIWebDataQMYSforJava">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sDataType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sHTLoader" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sHTCorp" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sHTFixedCondition" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getEAIWebDataQMYSforJavaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getEAIWebDataQMYSforJavaResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getEAIIF">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sServerCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="byteHTLoader" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getEAIIFResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getEAIIFResult">
+              <s:complexType>
+                <s:sequence>                  
+                <s:any minOccurs="2" maxOccurs="2"/>
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetWebData2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sAssembly" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sServerCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="parameters" type="tns:ArrayOfAnyType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfAnyType">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="anyType" nillable="true" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetWebData2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetWebData2Result" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="getUserDataSoapIn">
+    <wsdl:part name="parameters" element="tns:getUserData" />
+  </wsdl:message>
+  <wsdl:message name="getUserDataSoapOut">
+    <wsdl:part name="parameters" element="tns:getUserDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getCompanyDataSoapIn">
+    <wsdl:part name="parameters" element="tns:getCompanyData" />
+  </wsdl:message>
+  <wsdl:message name="getCompanyDataSoapOut">
+    <wsdl:part name="parameters" element="tns:getCompanyDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getUpdateMSGSoapIn">
+    <wsdl:part name="parameters" element="tns:getUpdateMSG" />
+  </wsdl:message>
+  <wsdl:message name="getUpdateMSGSoapOut">
+    <wsdl:part name="parameters" element="tns:getUpdateMSGResponse" />
+  </wsdl:message>
+  <wsdl:message name="writeMSGSoapIn">
+    <wsdl:part name="parameters" element="tns:writeMSG" />
+  </wsdl:message>
+  <wsdl:message name="writeMSGSoapOut">
+    <wsdl:part name="parameters" element="tns:writeMSGResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDBStructureSoapIn">
+    <wsdl:part name="parameters" element="tns:getDBStructure" />
+  </wsdl:message>
+  <wsdl:message name="getDBStructureSoapOut">
+    <wsdl:part name="parameters" element="tns:getDBStructureResponse" />
+  </wsdl:message>
+  <wsdl:message name="getDemoDBStructureSoapIn">
+    <wsdl:part name="parameters" element="tns:getDemoDBStructure" />
+  </wsdl:message>
+  <wsdl:message name="getDemoDBStructureSoapOut">
+    <wsdl:part name="parameters" element="tns:getDemoDBStructureResponse" />
+  </wsdl:message>
+  <wsdl:message name="execSQLSoapIn">
+    <wsdl:part name="parameters" element="tns:execSQL" />
+  </wsdl:message>
+  <wsdl:message name="execSQLSoapOut">
+    <wsdl:part name="parameters" element="tns:execSQLResponse" />
+  </wsdl:message>
+  <wsdl:message name="getWebDataSoapIn">
+    <wsdl:part name="parameters" element="tns:getWebData" />
+  </wsdl:message>
+  <wsdl:message name="getWebDataSoapOut">
+    <wsdl:part name="parameters" element="tns:getWebDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getEAIWebDataSoapIn">
+    <wsdl:part name="parameters" element="tns:getEAIWebData" />
+  </wsdl:message>
+  <wsdl:message name="getEAIWebDataSoapOut">
+    <wsdl:part name="parameters" element="tns:getEAIWebDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="getEAIWebDataNBDWSoapIn">
+    <wsdl:part name="parameters" element="tns:getEAIWebDataNBDW" />
+  </wsdl:message>
+  <wsdl:message name="getEAIWebDataNBDWSoapOut">
+    <wsdl:part name="parameters" element="tns:getEAIWebDataNBDWResponse" />
+  </wsdl:message>
+  <wsdl:message name="getEAIWebDataNBDWSysSoapIn">
+    <wsdl:part name="parameters" element="tns:getEAIWebDataNBDWSys" />
+  </wsdl:message>
+  <wsdl:message name="getEAIWebDataNBDWSysSoapOut">
+    <wsdl:part name="parameters" element="tns:getEAIWebDataNBDWSysResponse" />
+  </wsdl:message>
+  <wsdl:message name="getEAIWebDataQMYSSoapIn">
+    <wsdl:part name="parameters" element="tns:getEAIWebDataQMYS" />
+  </wsdl:message>
+  <wsdl:message name="getEAIWebDataQMYSSoapOut">
+    <wsdl:part name="parameters" element="tns:getEAIWebDataQMYSResponse" />
+  </wsdl:message>
+  <wsdl:message name="getEAIWebDataQMYSforJavaSoapIn">
+    <wsdl:part name="parameters" element="tns:getEAIWebDataQMYSforJava" />
+  </wsdl:message>
+  <wsdl:message name="getEAIWebDataQMYSforJavaSoapOut">
+    <wsdl:part name="parameters" element="tns:getEAIWebDataQMYSforJavaResponse" />
+  </wsdl:message>
+  <wsdl:message name="getEAIIFSoapIn">
+    <wsdl:part name="parameters" element="tns:getEAIIF" />
+  </wsdl:message>
+  <wsdl:message name="getEAIIFSoapOut">
+    <wsdl:part name="parameters" element="tns:getEAIIFResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetWebData2SoapIn">
+    <wsdl:part name="parameters" element="tns:GetWebData2" />
+  </wsdl:message>
+  <wsdl:message name="GetWebData2SoapOut">
+    <wsdl:part name="parameters" element="tns:GetWebData2Response" />
+  </wsdl:message>
+  <wsdl:portType name="WebServiceSoap">
+    <wsdl:operation name="getUserData">
+      <wsdl:input message="tns:getUserDataSoapIn" />
+      <wsdl:output message="tns:getUserDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getCompanyData">
+      <wsdl:input message="tns:getCompanyDataSoapIn" />
+      <wsdl:output message="tns:getCompanyDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getUpdateMSG">
+      <wsdl:input message="tns:getUpdateMSGSoapIn" />
+      <wsdl:output message="tns:getUpdateMSGSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="writeMSG">
+      <wsdl:input message="tns:writeMSGSoapIn" />
+      <wsdl:output message="tns:writeMSGSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getDBStructure">
+      <wsdl:input message="tns:getDBStructureSoapIn" />
+      <wsdl:output message="tns:getDBStructureSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getDemoDBStructure">
+      <wsdl:input message="tns:getDemoDBStructureSoapIn" />
+      <wsdl:output message="tns:getDemoDBStructureSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="execSQL">
+      <wsdl:input message="tns:execSQLSoapIn" />
+      <wsdl:output message="tns:execSQLSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getWebData">
+      <wsdl:input message="tns:getWebDataSoapIn" />
+      <wsdl:output message="tns:getWebDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getEAIWebData">
+      <wsdl:input message="tns:getEAIWebDataSoapIn" />
+      <wsdl:output message="tns:getEAIWebDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getEAIWebDataNBDW">
+      <wsdl:input message="tns:getEAIWebDataNBDWSoapIn" />
+      <wsdl:output message="tns:getEAIWebDataNBDWSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getEAIWebDataNBDWSys">
+      <wsdl:input message="tns:getEAIWebDataNBDWSysSoapIn" />
+      <wsdl:output message="tns:getEAIWebDataNBDWSysSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getEAIWebDataQMYS">
+      <wsdl:input message="tns:getEAIWebDataQMYSSoapIn" />
+      <wsdl:output message="tns:getEAIWebDataQMYSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getEAIWebDataQMYSforJava">
+      <wsdl:input message="tns:getEAIWebDataQMYSforJavaSoapIn" />
+      <wsdl:output message="tns:getEAIWebDataQMYSforJavaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getEAIIF">
+      <wsdl:input message="tns:getEAIIFSoapIn" />
+      <wsdl:output message="tns:getEAIIFSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWebData2">
+      <wsdl:input message="tns:GetWebData2SoapIn" />
+      <wsdl:output message="tns:GetWebData2SoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WebServiceSoap" type="tns:WebServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getUserData">
+      <soap:operation soapAction="YuanYT.RemotingCall/getUserData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCompanyData">
+      <soap:operation soapAction="YuanYT.RemotingCall/getCompanyData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUpdateMSG">
+      <soap:operation soapAction="YuanYT.RemotingCall/getUpdateMSG" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="writeMSG">
+      <soap:operation soapAction="YuanYT.RemotingCall/writeMSG" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDBStructure">
+      <soap:operation soapAction="YuanYT.RemotingCall/getDBStructure" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDemoDBStructure">
+      <soap:operation soapAction="YuanYT.RemotingCall/getDemoDBStructure" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="execSQL">
+      <soap:operation soapAction="YuanYT.RemotingCall/execSQL" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getWebData">
+      <soap:operation soapAction="YuanYT.RemotingCall/getWebData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEAIWebData">
+      <soap:operation soapAction="YuanYT.RemotingCall/getEAIWebData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEAIWebDataNBDW">
+      <soap:operation soapAction="YuanYT.RemotingCall/getEAIWebDataNBDW" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEAIWebDataNBDWSys">
+      <soap:operation soapAction="YuanYT.RemotingCall/getEAIWebDataNBDWSys" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEAIWebDataQMYS">
+      <soap:operation soapAction="YuanYT.RemotingCall/getEAIWebDataQMYS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEAIWebDataQMYSforJava">
+      <soap:operation soapAction="YuanYT.RemotingCall/getEAIWebDataQMYSforJava" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEAIIF">
+      <soap:operation soapAction="YuanYT.RemotingCall/getEAIIF" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWebData2">
+      <soap:operation soapAction="YuanYT.RemotingCall/GetWebData2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WebServiceSoap12" type="tns:WebServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getUserData">
+      <soap12:operation soapAction="YuanYT.RemotingCall/getUserData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCompanyData">
+      <soap12:operation soapAction="YuanYT.RemotingCall/getCompanyData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getUpdateMSG">
+      <soap12:operation soapAction="YuanYT.RemotingCall/getUpdateMSG" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="writeMSG">
+      <soap12:operation soapAction="YuanYT.RemotingCall/writeMSG" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDBStructure">
+      <soap12:operation soapAction="YuanYT.RemotingCall/getDBStructure" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDemoDBStructure">
+      <soap12:operation soapAction="YuanYT.RemotingCall/getDemoDBStructure" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="execSQL">
+      <soap12:operation soapAction="YuanYT.RemotingCall/execSQL" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getWebData">
+      <soap12:operation soapAction="YuanYT.RemotingCall/getWebData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEAIWebData">
+      <soap12:operation soapAction="YuanYT.RemotingCall/getEAIWebData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEAIWebDataNBDW">
+      <soap12:operation soapAction="YuanYT.RemotingCall/getEAIWebDataNBDW" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEAIWebDataNBDWSys">
+      <soap12:operation soapAction="YuanYT.RemotingCall/getEAIWebDataNBDWSys" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEAIWebDataQMYS">
+      <soap12:operation soapAction="YuanYT.RemotingCall/getEAIWebDataQMYS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEAIWebDataQMYSforJava">
+      <soap12:operation soapAction="YuanYT.RemotingCall/getEAIWebDataQMYSforJava" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEAIIF">
+      <soap12:operation soapAction="YuanYT.RemotingCall/getEAIIF" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWebData2">
+      <soap12:operation soapAction="YuanYT.RemotingCall/GetWebData2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WebService">
+    <wsdl:port name="WebServiceSoap" binding="tns:WebServiceSoap">
+      <soap:address location="http://localhost/rfamis/remotingcall/WebService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WebServiceSoap12" binding="tns:WebServiceSoap12">
+      <soap12:address location="http://localhost/rfamis/remotingcall/WebService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

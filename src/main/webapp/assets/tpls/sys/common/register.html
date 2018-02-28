@@ -1,0 +1,84 @@
+﻿<div class="panel panel-primary">
+	<!-- Default panel contents -->
+	<div class="panel-heading">用户注册/绑定</div>
+	<div class="panel-body">
+		<ng-form name="registerForm" novalidate role="form"
+			class="form-horizontal">
+		<div class="form-group" style="margin-top: 15px">
+			<label class="col-md-2 control-label">用户名</label>
+			<div class="col-md-10">
+				<input name="tel" class="form-control"
+					ng-model="userRegisterInfo.MOBILEPHONE" required
+					placeholder="请输入手机号" type="text" ng-maxlength="11"
+					ng-minlength="11">
+			</div>
+		</div>
+		<div class="form-group"
+			ng-show="registerForm.tel.$dirty&&registerForm.tel.$invalid">
+			<div class="col-md-offset-2 col-md-10">
+				<label class="text-danger control-label"
+					ng-show="registerForm.tel.$error.required">手机号不能为空</label> <label
+					class="text-danger control-label"
+					ng-show="registerForm.tel.$invalid||registerForm.tel.$error.minlength||registerForm.tel.$error.maxlength">请输入11位数字</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<div class="input-group">
+					<input name="code" ng-model="userRegisterInfo.AUTHCODE" type="text"
+						class="form-control" ng-disabled="!userRegisterInfo.needcode"
+						placeholder="请输入验证码"> <span class="input-group-btn">
+						<button class="btn btn-default" type="button"
+							ng-click="getTelsms()"
+							ng-disabled="registerForm.tel.$error.required">获取验证码</button>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="form-group"
+			ng-show="registerForm.code.$dirty&&registerForm.code.$valid">
+			<div class="col-md-offset-2 col-md-10">
+				<label class="text-danger control-label"
+					ng-show="registerForm.code.$error.required">请输入验证码</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-2 control-label">密码:</label>
+			<div class="col-md-5">
+				<input type="password" name="password" class="form-control" required
+					ng-minlength="6" ng-model="userRegisterInfo.PASSWORD"
+					placeholder="请输入密码" />
+			</div>
+		</div>
+		<div class="form-group"
+			ng-show="registerForm.password.$dirty&&registerForm.password.$valid">
+			<div class="col-md-offset-2 col-md-10">
+				<label class="text-danger control-label"
+					ng-show="registerForm.password.$error.required"> 密码不能为空</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<div class="checkbox">
+					<label> <input type="checkbox"
+						ng-model="userRegisterInfo.autoLogin" />自动登录
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="form-group" ng-show="userRegisterInfo.error">
+			<div class="col-md-offset-2 col-md-10">
+				<label class="text-danger control-label">{{userRegisterInfo.msg}}</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<button class="btn btn-primary" ng-click="register()"
+					ng-disabled="registerForm.$invalid">
+					<span class="glyphicon glyphicon-ok"></span> 提交
+				</button>
+			</div>
+		</div>
+		</ng-form>
+	</div>
+</div>
