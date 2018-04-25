@@ -1,8 +1,12 @@
 package cn.pcorp.controllor;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.net.URLDecoder;
+import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +24,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.aop.framework.AopProxy;
-import org.springframework.aop.support.AopUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -69,7 +72,7 @@ public class MainController {
 	 * @return
 	 * @throws ParseException
 	 */
-	@RequestMapping(value = "/api/{pId}/{appId}/{action}",method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
+	@RequestMapping(value = "/api/{pId}/{appId}/{action}",method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE},produces={"application/json;charset=UTF-8"})
 	@ResponseBody
 	public void impl(@PathVariable String pId, @PathVariable String appId,
 			@PathVariable String action,HttpServletRequest request, HttpServletResponse response)
@@ -104,7 +107,29 @@ public class MainController {
 				List<DynaBean> paramList = dao.findWithQueryNoCache(new DynaBean("SYS_INTERFACEPARAM", "and IMPLID='"+ interfaceBean.getStr("IMPLID")+ "' and PID='" + pId + "'"));
 				paramBean.setStr(MethodConstant.AID, appBean.getStr(MethodConstant.APPID));
 				// 获取参数体消息
-				JSONArray paramJson = JSONArray.parseArray(paramBean.getStr(MethodConstant.DATA, "[{}]"));
+				JSONArray paramJson = JSONArray.parseArray(paramBean.getStr(MethodConstant.DATA, "[]"));
+				if(paramJson.size()==0){
+					BufferedReader in = new BufferedReader(new InputStreamReader(request.getInputStream(),Charset.forName("UTF-8")));
+					StringBuilder sb = new StringBuilder();
+					String line = null;
+					while ((line = in.readLine()) != null) {
+						sb.append(line);
+					}
+					line=null;
+					String jstr=sb.toString();
+					if(jstr.length()!=0){
+						//中文解码
+						try{
+							JSONObject objJson = JSONObject.parseObject(jstr);
+							if(objJson!=null){
+								paramJson = objJson.getJSONArray(MethodConstant.DATA);
+							}
+							paramBean.set(MethodConstant.DATA, jstr);
+						}catch(Exception ex){			
+							ex.printStackTrace();
+						}
+					}
+				}			
 				// 校验合法性
 				if (!ApiUtil.checkParams(dao, paramBean, paramJson,
 						interfaceBean, paramList, result)) {
@@ -222,6 +247,8 @@ public class MainController {
 		String json = "";
 		try {
 			DynaBean paramBean = BeanUtils.requestToDynaBean(request);
+			//获取用户信息
+			paramBean.set("USERINFO", baseService.getUserInfo(baseService.getBaseDao(),null,  paramBean));
 			paramBean.set(PageUtil.PAGE_ACTION, action);
 			paramBean.set(PageUtil.PAGE_APPID, appId);
 			paramBean.set(PageUtil.PAGE_MENUID, menuId.equals("TOP") ? ""
