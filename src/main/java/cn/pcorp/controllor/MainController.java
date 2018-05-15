@@ -94,7 +94,7 @@ public class MainController {
 			// 获取参数列表信息
 			DynaBean paramBean = BeanUtils.requestToDynaBean(request);			
 			// 数据源名称编码
-			paramBean.setStr(BeanUtils.KEY_DATASOURCEKEY, "DynamicDS");
+			paramBean.setStr(BeanUtils.KEY_DATASOURCEKEY, "");
 			// 获取操作参数
 			paramBean.set(MethodConstant.ACT, action);
 			// 获取产品id
