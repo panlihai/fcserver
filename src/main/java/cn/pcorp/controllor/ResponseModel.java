@@ -1,5 +1,7 @@
 package cn.pcorp.controllor;
 
+import java.util.Map;
+
 import cn.pcorp.controllor.util.MethodConstant;
 import cn.pcorp.model.DynaBean;
 import cn.pcorp.util.DateUtils;
@@ -34,7 +36,6 @@ public class ResponseModel {
 	}
 	public void setCode(String code) {
 		this.code = code;
-		result.set(MethodConstant.CODE, this.getCode());
 	}
 	public Long getTimestamp() {
 		return DateUtils.getTimestamp();
@@ -58,8 +59,7 @@ public class ResponseModel {
 	}
 	public void setData(Object data) {
 		this.data = data;
-
-		result.set(MethodConstant.DATA, this.getData());
+		this.result.set(MethodConstant.DATA, data);
 	}
 	public static ResponseModel getInstance() {		
 		ResponseModel res = new ResponseModel();
@@ -70,5 +70,18 @@ public class ResponseModel {
 		res.getResult().set(MethodConstant.MSG, res.getMsg());
 		res.getResult().set(MethodConstant.CODE, res.getCode());
 		return res;
+	}
+	public Map toMap(){
+		result.set(MethodConstant.MSG, this.getMsg());
+		result.set(MethodConstant.CODE, this.getCode());
+		result.set(MethodConstant.DATA, this.getData());
+		result.set(MethodConstant.TIMESTAMP, this.getTimestamp());
+		if(getListsize()!=null){
+			result.set(MethodConstant.LISTSIZE, this.getListsize());
+		}
+		if(getTotalsize()!=null){
+			result.set(MethodConstant.TOTALSIZE, this.getTotalsize());
+		}
+		return result.getValues();
 	}
 }
