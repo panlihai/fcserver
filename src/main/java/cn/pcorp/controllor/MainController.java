@@ -1,8 +1,11 @@
 package cn.pcorp.controllor;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +23,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.aop.framework.AopProxy;
-import org.springframework.aop.support.AopUtils;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,6 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cn.pcorp.controllor.util.MethodConstant;
 import cn.pcorp.dao.BaseDao;
+import cn.pcorp.dynamicdatasource.DynamicDataSource;
 import cn.pcorp.impl.sys.ServiceListener;
 import cn.pcorp.model.DynaBean;
 import cn.pcorp.service.BaseService;
@@ -58,7 +63,8 @@ public class MainController {
 	@Resource(name = "baseService")
 	private BaseService baseService;
 	private static org.apache.log4j.Logger logger = Logger.getLogger(MainController.class);
-	  
+	@Resource(name = "dynamicDataSource")
+	private DynamicDataSource dynamicDataSource;
 	/**
 	 * 对APPID进行操作显示 get请求只作显示操作
 	 * 
@@ -74,14 +80,21 @@ public class MainController {
 	public void impl(@PathVariable String pId, @PathVariable String appId,
 			@PathVariable String action,HttpServletRequest request, HttpServletResponse response)
 			throws ParseException {
+		// 事务对象
+		DataSourceTransactionManager transactionManager = null;
+		// 事务状态
+		TransactionStatus status = null;
 		BaseDao dao = baseService.getBaseDao();
 		// 返回数据对象
 		DynaBean result = new DynaBean();
-		result.set(MethodConstant.CODE, "0");// 请求成功
-		result.set(MethodConstant.MSG,ApiUtil.getBackName(dao, "0"));
 		try {
+			result.set(MethodConstant.CODE, "0");// 请求成功
+			result.set(MethodConstant.MSG,ApiUtil.getBackName(dao, "0"));
+			
 			// 获取参数列表信息
 			DynaBean paramBean = BeanUtils.requestToDynaBean(request);			
+			// 数据源名称编码
+			paramBean.setStr(BeanUtils.KEY_DATASOURCEKEY, "DynamicDS");
 			// 获取操作参数
 			paramBean.set(MethodConstant.ACT, action);
 			// 获取产品id
@@ -91,7 +104,7 @@ public class MainController {
 			// 获取应用id
 			paramBean.set(MethodConstant.AID, appId);
 			// // 得到产品对象
-			List<DynaBean> intefaceList = dao.findWithQueryNoCache(new DynaBean("SYS_INTERFACE"," and REQTYPE='" + action + "' and PID='" + pId	+ "' and REQURL='" + appId + "'"));
+			List<DynaBean> intefaceList = dao.findWithQueryNoCache("", new DynaBean("SYS_INTERFACE"," and REQTYPE='" + action + "' and PID='" + pId	+ "' and REQURL='" + appId + "'"));
 			if (intefaceList.size() == 0) {
 				result.setStr(MethodConstant.CODE, "40004");// 不合法的AID凭证
 				result.setStr(MethodConstant.MSG, ApiUtil.getBackName(dao, "40004"));
@@ -101,10 +114,32 @@ public class MainController {
 				DynaBean interfaceBean = intefaceList.get(0);
 				DynaBean appBean = CacheUtil.getSysapp(dao.getReadCache(),interfaceBean.getStr(MethodConstant.APPID),dao);
 				// 得到接口请求及响应的参数列表
-				List<DynaBean> paramList = dao.findWithQueryNoCache(new DynaBean("SYS_INTERFACEPARAM", "and IMPLID='"+ interfaceBean.getStr("IMPLID")+ "' and PID='" + pId + "'"));
+				List<DynaBean> paramList = dao.findWithQueryNoCache("", new DynaBean("SYS_INTERFACEPARAM", "and IMPLID='"+ interfaceBean.getStr("IMPLID")+ "' and PID='" + pId + "'"));
 				paramBean.setStr(MethodConstant.AID, appBean.getStr(MethodConstant.APPID));
 				// 获取参数体消息
 				JSONArray paramJson = JSONArray.parseArray(paramBean.getStr(MethodConstant.DATA, "[{}]"));
+				if(paramJson.size()==0){
+					BufferedReader in = new BufferedReader(new InputStreamReader(request.getInputStream(),Charset.forName("UTF-8")));
+					StringBuilder sb = new StringBuilder();
+					String line = null;
+					while ((line = in.readLine()) != null) {
+						sb.append(line);
+					}
+					line=null;
+					String jstr=sb.toString();
+					if(jstr.length()!=0){
+						//中文解码
+						try{
+							JSONObject objJson = JSONObject.parseObject(jstr);
+							if(objJson!=null){
+								paramJson = objJson.getJSONArray(MethodConstant.DATA);
+							}
+							paramBean.set(MethodConstant.DATA, jstr);
+						}catch(Exception ex){			
+							ex.printStackTrace();
+						}
+					}
+				}			
 				// 校验合法性
 				if (!ApiUtil.checkParams(dao, paramBean, paramJson,
 						interfaceBean, paramList, result)) {
@@ -132,9 +167,17 @@ public class MainController {
 							Method[] methods = ownerClass.getMethods();
 							for(Method method:methods){
 								if(method.getName().toUpperCase().equals(action.toUpperCase())){
+									// 事务设置数据源-20180410
+									transactionManager = dynamicDataSource.getTransactionManager(paramBean.getStr(BeanUtils.KEY_DATASOURCEKEY));
+									// 获得事务状态-20180410
+									status = dynamicDataSource.getTransactionStatus(transactionManager);
+									
 									RequestModel rm = new RequestModel(request,response,paramBean,productBean, appBean, interfaceBean,paramList, paramJson, baseService);							     
 									ResponseModel rs = (ResponseModel)method.invoke(listener, rm);
 									result = rs.getResult();
+									
+									// 提交-20180410
+									transactionManager.commit(status);
 									break;
 								}
 							}
@@ -174,7 +217,7 @@ public class MainController {
 						result.set(MethodConstant.DATA, resultMap);
 					}
 					// 记录响应日志
-					LogUtil.logResponse(log, result);
+//					LogUtil.logResponse(log, result);
 					// 操作原样返回
 					result.set(MethodConstant.ACT, action);
 					// 返回时间戳
@@ -187,6 +230,10 @@ public class MainController {
 			result.set(MethodConstant.CODE, "-1");
 			// 错误消息体
 			result.set(MethodConstant.MSG, "处理异常，请联系管理员");
+			
+			// 回滚事务-20180410
+			if(transactionManager!=null)
+				transactionManager.rollback(status);
 		}
 		try {
 			if(!action.equals(MethodConstant.EXPORT)){
@@ -222,15 +269,17 @@ public class MainController {
 		String json = "";
 		try {
 			DynaBean paramBean = BeanUtils.requestToDynaBean(request);
+			//获取用户信息
+			paramBean.set("USERINFO", baseService.getUserInfo(baseService.getBaseDao(),null,  paramBean));			
+			// 数据源名称编码
+			paramBean.setStr("KEY", "");
 			paramBean.set(PageUtil.PAGE_ACTION, action);
 			paramBean.set(PageUtil.PAGE_APPID, appId);
-			paramBean.set(PageUtil.PAGE_MENUID, menuId.equals("TOP") ? ""
-					: menuId);
+			paramBean.set(PageUtil.PAGE_MENUID, menuId.equals("TOP") ? "" : menuId);
 			paramBean.set(PageUtil.PAGE_PID, pId);
 			switch (action) {
 			case SyConstant.ACT_VIEW_MENUS:
-				json = JsonUtils.toJson(baseService.showMenus(paramBean)
-						.getModel());
+				json = JsonUtils.toJson(baseService.showMenus(paramBean).getModel());
 				break;
 			/** ACT_DATA_MENUS 显示所有的数据 */
 			case SyConstant.ACT_VIEW_ONE:
@@ -245,7 +294,7 @@ public class MainController {
 			/** $ACTION$：显示列表JSON数据 */
 			case SyConstant.ACT_DATA_JSON:
 				// 根据应用程序获得json
-				json = baseService.listJsonFromAppid(appId);
+				json = baseService.listJsonFromAppid(paramBean.getStr(BeanUtils.KEY_DATASOURCEKEY), appId);
 				break;
 			/** $ACTION$：获取静态数据字典列表列表JSON数据 */
 			case SyConstant.ACT_DATA_JSON_VALUE:

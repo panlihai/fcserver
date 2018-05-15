@@ -1,12 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.neusoft</groupId>
-	<artifactId>server</artifactId>
+	<modelVersion>3.0.0</modelVersion>
+	<groupId>com.neusoft3</groupId>
+	<artifactId>server3.0</artifactId>
 	<packaging>war</packaging>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>3.0.0-SNAPSHOT</version>
 	<properties>
 		<org.springframework-version>4.0.2.RELEASE</org.springframework-version>
+		<!-- ibm-mq.version>7.1.0.6</ibm-mq.version -->    
 	</properties>
 	<dependencies>
 		<dependency>
@@ -52,7 +53,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
-			<version>3.0.4.RELEASE</version>
+			<version>${org.springframework-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sourceforge.jexcelapi</groupId>
@@ -175,11 +176,11 @@
 			<version>9.0.6.v20130930</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.apache.ibatis</groupId>
 			<artifactId>ibatis-sqlmap</artifactId>
 			<version>2.3.0</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -279,6 +280,54 @@
 			<artifactId>jedis</artifactId>
 			<version>2.9.0</version>
 		</dependency>
+		
+		<!-- 自定义方式引入外部包  ibm-mq jar 包 -->
+		<!-- ibm.mq -->
+		<!-- 
+		<dependency>
+		    <groupId>com.ibm</groupId>
+		    <artifactId>com.ibm.mq</artifactId>
+		    <version>${ibm-mq.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.ibm</groupId>
+		    <artifactId>com.ibm.mq.commonservices</artifactId>
+		    <version>${ibm-mq.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.ibm</groupId>
+		    <artifactId>com.ibm.mq.headers</artifactId>
+		    <version>${ibm-mq.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.ibm</groupId>
+		    <artifactId>com.ibm.mq.jmqi</artifactId>
+		    <version>${ibm-mq.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.ibm</groupId>
+		    <artifactId>com.ibm.mqjms</artifactId>
+		    <version>${ibm-mq.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.ibm</groupId>
+		    <artifactId>connector</artifactId>
+		    <version>${ibm-mq.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.ibm</groupId>
+		    <artifactId>dhbcore</artifactId>
+		    <version>${ibm-mq.version}</version>
+		</dependency> 
+		-->
+		<!-- rabbit.mq -->
+		<dependency>
+		    <groupId>com.rabbitmq</groupId>
+		    <artifactId>amqp-client</artifactId>
+		    <version>5.2.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<repositories>

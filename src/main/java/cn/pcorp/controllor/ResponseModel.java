@@ -13,6 +13,7 @@ public class ResponseModel {
 	private Long timestamp;
 	public void setTimestamp(Long timestamp) {
 		this.timestamp = timestamp;
+		result.set(MethodConstant.TIMESTAMP, this.getTimestamp());
 	}
 	private Long totalsize;
 	private Long listsize;
@@ -28,6 +29,7 @@ public class ResponseModel {
 	}
 	public void setMsg(String msg) {
 		this.msg = msg;
+		result.set(MethodConstant.MSG, this.getMsg());
 	}
 	public String getCode() {
 		return code;
@@ -43,12 +45,14 @@ public class ResponseModel {
 	}
 	public void setTotalsize(Long totalsize) {
 		this.totalsize = totalsize;
+		result.set(MethodConstant.TOTALSIZE, this.getTotalsize());
 	}
 	public Long getListsize() {
 		return listsize;
 	}
 	public void setListsize(Long listsize) {
 		this.listsize = listsize;
+		result.set(MethodConstant.LISTSIZE, this.getListsize());
 	}
 	public Object getData() {
 		return data;
