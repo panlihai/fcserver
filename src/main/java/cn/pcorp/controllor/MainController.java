@@ -94,7 +94,7 @@ public class MainController {
 			// 获取参数列表信息
 			DynaBean paramBean = BeanUtils.requestToDynaBean(request);			
 			// 数据源名称编码
-			paramBean.setStr(BeanUtils.KEY_DATASOURCEKEY, "DynamicDS");
+			paramBean.setStr(BeanUtils.KEY_DATASOURCEKEY, "");
 			// 获取操作参数
 			paramBean.set(MethodConstant.ACT, action);
 			// 获取产品id
@@ -117,7 +117,7 @@ public class MainController {
 				List<DynaBean> paramList = dao.findWithQueryNoCache("", new DynaBean("SYS_INTERFACEPARAM", "and IMPLID='"+ interfaceBean.getStr("IMPLID")+ "' and PID='" + pId + "'"));
 				paramBean.setStr(MethodConstant.AID, appBean.getStr(MethodConstant.APPID));
 				// 获取参数体消息
-				JSONArray paramJson = JSONArray.parseArray(paramBean.getStr(MethodConstant.DATA, "[{}]"));
+				JSONArray paramJson = JSONArray.parseArray(paramBean.getStr(MethodConstant.DATA, "[]"));
 				if(paramJson.size()==0){
 					BufferedReader in = new BufferedReader(new InputStreamReader(request.getInputStream(),Charset.forName("UTF-8")));
 					StringBuilder sb = new StringBuilder();
