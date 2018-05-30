@@ -70,17 +70,6 @@
 		<property name="defalutJdbcTemplate" ref="defalutJdbcTemplate"/>
 	</bean>
 	
-	
-	<!-- 配置SqlMapClient对象 -->
-	<!-- <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
-		<property name="configLocation" value="classpath:config/sqlMapConfig.xml" />
-		<property name="dataSource" ref="dataSource" />
-	</bean> -->
-	<!--根据sqlMapClien创建一个SqlMapClient模版类 -->
-	<!-- <bean id="sqlMapClientTemplate" class="org.springframework.orm.ibatis.SqlMapClientTemplate">
-		<property name="sqlMapClient" ref="sqlMapClient" />
-	</bean> -->
-	
 	<!-- 事务管理器 -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -124,8 +113,7 @@
 				<prop key="delete*">PROPAGATION_REQUIRED</prop>
 				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
 			</props>
-		</property>
-		
+		</property>		
 	</bean>
 	
 	<bean id="baseDao" class="cn.pcorp.dao.BaseDao">		
@@ -136,13 +124,5 @@
 	<bean id="baseService" class="cn.pcorp.service.BaseService">
 		<property name="baseDao" ref="baseDao" />
 	</bean>
-	<!-- 添加了事务的管理类   
-	<property name="target">
-			<bean class="cn.pcorp.service.BaseService" />
-		</property>
-	-->
-	<!-- <bean id="baseManager" parent="baseTransactionProxy">
-		<property name="target" ref="baseService"/>
-	</bean> -->
 
 </beans>

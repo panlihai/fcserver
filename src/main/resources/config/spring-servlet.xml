@@ -9,8 +9,6 @@
         http://www.springframework.org/schema/context   
         http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-	<mvc:annotation-driven />
-
 	<!-- 自动扫描,完成bean创建和依赖注入 -->
 	<context:component-scan base-package="cn.pcorp" />
 

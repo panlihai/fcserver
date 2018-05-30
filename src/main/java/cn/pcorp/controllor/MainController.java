@@ -176,8 +176,13 @@ public class MainController {
 									ResponseModel rs = (ResponseModel)method.invoke(listener, rm);
 									result = rs.getResult();
 									
-									// 提交-20180410
-									transactionManager.commit(status);
+									if("0".equals(rs.getCode())){
+										// 提交-20180410
+										transactionManager.commit(status);
+									}else{
+										// 回滚事务-20180524
+										transactionManager.rollback(status);
+									}
 									break;
 								}
 							}
