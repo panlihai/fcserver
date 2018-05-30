@@ -1,0 +1,14 @@
+eclipse.preferences.version=1
+encoding//src/main/java/com/archie/util/DateUtils.java=UTF-8
+encoding//src/main/java/com/archie/util/ExcelRead.java=UTF-8
+encoding//src/main/resources=UTF-8
+encoding//src/main/resources/config/config.properties=UTF-8
+encoding//src/main/webapp/assets/tpls/client/nav.html=UTF-8
+encoding//src/main/webapp/assets/tpls/client/wolfbook.html=UTF-8
+encoding//src/main/webapp/assets/tpls/demo/loginForm.html=UTF-8
+encoding//src/main/webapp/assets/tpls/stainless/placeorder.html=UTF-8
+encoding//src/main/webapp/assets/tpls/stainless/user/account.html=UTF-8
+encoding//src/main/webapp/assets/tpls/stainless/user/myorder.html=UTF-8
+encoding//src/main/webapp/assets/tpls/stainless/user/profile.html=UTF-8
+encoding//src/test/resources=UTF-8
+encoding/<project>=UTF-8

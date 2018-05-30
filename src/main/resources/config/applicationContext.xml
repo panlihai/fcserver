@@ -3,13 +3,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
         http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
         http://www.springframework.org/schema/tx
-        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd"
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd"
 	default-autowire="byName">
 
 	<!-- 自动扫描 -->
@@ -17,12 +17,12 @@
 	<mvc:annotation-driven />
 	<!-- 启动spring注解,当自动扫描启动后,该配置可以去掉 -->
 	<context:annotation-config />
-	<!-- 配置数据源属性文件 -->
+	<!-- 配置文件 -->
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<value>classpath:config/database.properties</value>
+				<value>classpath:config/config.properties</value>
 			</list>
 		</property>
 	</bean>
@@ -48,16 +48,28 @@
 		<property name="checkoutTimeout" value="0" />
 		<property name="autoCommitOnClose" value="false"></property>
 	</bean>
-
-	<!-- 配置SqlMapClient对象 -->
-	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
-		<property name="configLocation" value="classpath:config/sqlMapConfig.xml" />
+	
+	<bean id="defalutJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	<!--根据sqlMapClien创建一个SqlMapClient模版类 -->
-	<bean id="sqlMapClientTemplate" class="org.springframework.orm.ibatis.SqlMapClientTemplate">
-		<property name="sqlMapClient" ref="sqlMapClient" />
+	<!-- 动态数据源,事务20180410  -->
+	<bean id="dynamicDataSource" class="cn.pcorp.dynamicdatasource.DynamicDataSource">  
+        <property name="targetDataSources">
+			<map> </map>  
+        </property>  
+        <property name="targetTransactionManagers">  
+            <map> </map>  
+        </property>  
+        <property name="defaultTargetDataSource" ref="dataSource" />  
+    </bean>
+	<!-- jdbctemplate集合20180410 -->   
+	<bean id="dynamicJdbcTemplate" class="cn.pcorp.dynamicdatasource.DynamicJdbcTemplate">
+		<property name="targetJdbcTemplates">  
+	    	<map>  	</map>  
+	    </property>
+		<property name="defalutJdbcTemplate" ref="defalutJdbcTemplate"/>
 	</bean>
+	
 	<!-- 事务管理器 -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -65,7 +77,6 @@
 	</bean>
 	<!-- 启动spring事务注解，事务注解尽在此 -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
-
 
 	<!-- 配置事务特性 -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
@@ -102,19 +113,16 @@
 				<prop key="delete*">PROPAGATION_REQUIRED</prop>
 				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
 			</props>
-		</property>
+		</property>		
 	</bean>
-	<bean id="baseDao" class="cn.pcorp.dao.BaseDao">
-		<property name="sqlMapClient" ref="sqlMapClient" />
+	
+	<bean id="baseDao" class="cn.pcorp.dao.BaseDao">		
+		<property name="runPid" value="${runPid}"/>
+		<property name="dynamicDataSource" ref="dynamicDataSource" />
+		<property name="dynamicJdbcTemplate" ref="dynamicJdbcTemplate" />
 	</bean>
 	<bean id="baseService" class="cn.pcorp.service.BaseService">
 		<property name="baseDao" ref="baseDao" />
-	</bean>
-	<!-- 添加了事务的管理类 -->
-	<bean id="baseManager" parent="baseTransactionProxy">
-		<property name="target">
-			<bean class="cn.pcorp.service.BaseService" />
-		</property>
 	</bean>
 
 </beans>
